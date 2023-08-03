@@ -1,53 +1,20 @@
 const express = require('express')
-
-const User = require('../models/user')
+const user_controller = require('../controllers/user')
 
 let router = express.Router()
 
-router.get('', (req, res) => {
-    User.findAll()
-        .then(users => res.json({ data: users }))
-        .catch(err => res.status(500).json({ message: 'Database Error' }))
-})
+router.get('/', user_controller.getAllUsers)
 
-router.get('/:id', (req, res) => {
-    let userId = parseInt(req.params.id)
+router.get('/:id', user_controller.getUser)
 
-    if (!userId) {
-        return res.json(400).json({ message: 'Missing Parameter' })
-    }
+router.put('', user_controller.addUser)
 
-    User.findOne({ where: { id: userId }, raw: true })
-        .then(user => {
-            if ((user === null)) {
-                return res.status(404).json({ message: 'This user does not exist !' })
-            }
+router.patch('/:id', user_controller.updateUser)
 
-            return res.json({ data: user })
-        })
-        .catch(err => res.status(500).json({ message: 'Database Error' }))
-})
+router.delete('/trash/:id', user_controller.softDelete)
 
-router.put('', (req, res) => {
-    const { email, username, password } = req.body
+router.post('/untrash/:id', user_controller.restoreUser)
 
-    if (!email || !username || !password) {
-        return res.status(400).json({ message: 'Missing data' })
-    }
+router.delete('/:id', user_controller.deleteUser)
 
-    User.findOne({ where: { email: email }, raw: true })
-        .then(user => {
-            if (user !== null) {
-                return res.status(409).json({ message: `The user ${username} already exists !` })
-            }
-
-            User.create(req.body)
-                .then(user => res.json({ message: 'User created', data: user }))
-                .catch(err => res.status(500).json({ message: 'Database Error' }))
-        })
-        .catch(err => res.status(500).json({ message: 'Database Error' }))
-})
-
-router.patch('/:id')
-
-router.delete('/:id')
+module.exports = router

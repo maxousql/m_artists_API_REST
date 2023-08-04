@@ -2,7 +2,7 @@
   <br>
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png" alt="Markdownify" width="200"></a>
   <br>
-  ARTIST API
+  M'ARTIST API
   <br>
 </h1>
 
@@ -48,6 +48,8 @@ TIME_JWT=1 hour
 ```
 
 ## Table des matières
+- [Connexion](#connexion)
+  - [1. Se connecter](#1-se-connecter)
 - [Utilisateurs](#utilisateurs)
   - [1. Créer un nouvel utilisateur](#1-créer-un-nouvel-utilisateur)
   - [2. Récupérer un utilisateur par son identifiant](#2-récupérer-un-utilisateur-par-son-identifiant)
@@ -64,8 +66,45 @@ TIME_JWT=1 hour
   - [5. SoftDelete](#5-softdelete-1)
   - [6. Restore utiliasteur SoftDelete](#6-restore-utiliasteur-softdelete-1)
   - [7. Delete](#7-delete-1)
-- [Connexion](#connexion)
-  - [1. Se connecter](#1-se-connecter)
+
+# Connexion
+
+## 1. Se connecter
+
+  - **URL**: `POST /auth/login`
+  - **Description**: Cette route permet à un utilisateur de se connecter et d'obtenir un token d'authentification.
+  - **Authentification requise**: Non
+  - **Paramètres**:
+
+    | Nom         | Type     | Description           |
+    | ----------- | -------- | --------------------- |
+    | `username`  | string   | Nom d'utilisateur     |
+    | `password`  | string   | Mot de passe          |
+
+  - **Exemple de requête**:
+
+    ```http
+    POST /api/users/login
+    Content-Type: application/json
+
+    {
+      "email": "ilias@outlook.fr",
+      "password": "12345"
+    }
+    ```
+
+  - **Réponse réussie**:
+
+    ```
+    {
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJpbGlhcyIsImVtYWlsIjoiaWxpYXNAb3V0bG9vay5mciIsImlhdCI6MTY5MTE3NDE5OCwiZXhwIjoxNjkxMTc3Nzk4fQ.UbB88DVm7zu9GHt2Jg-g-0cG-FqQ2mOY3oodMsCumP4"
+    }
+    ```
+
+  - **Réponse d'erreur**:
+
+    - Statut 500 Database Error : Si erreur sequelize
+    - Statut 400 Missing data : Si un paramètre est manquant ou invalide
 
 # Utilisateurs
 
@@ -539,45 +578,6 @@ TIME_JWT=1 hour
 
     ```
     Aucune réponse
-    ```
-
-  - **Réponse d'erreur**:
-
-    - Statut 500 Database Error : Si erreur sequelize
-    - Statut 400 Missing data : Si un paramètre est manquant ou invalide
-
-# Connexion
-
-## 1. Se connecter
-
-  - **URL**: `POST /auth/login`
-  - **Description**: Cette route permet à un utilisateur de se connecter et d'obtenir un token d'authentification.
-  - **Authentification requise**: Non
-  - **Paramètres**:
-
-    | Nom         | Type     | Description           |
-    | ----------- | -------- | --------------------- |
-    | `username`  | string   | Nom d'utilisateur     |
-    | `password`  | string   | Mot de passe          |
-
-  - **Exemple de requête**:
-
-    ```http
-    POST /api/users/login
-    Content-Type: application/json
-
-    {
-      "email": "ilias@outlook.fr",
-      "password": "12345"
-    }
-    ```
-
-  - **Réponse réussie**:
-
-    ```
-    {
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJpbGlhcyIsImVtYWlsIjoiaWxpYXNAb3V0bG9vay5mciIsImlhdCI6MTY5MTE3NDE5OCwiZXhwIjoxNjkxMTc3Nzk4fQ.UbB88DVm7zu9GHt2Jg-g-0cG-FqQ2mOY3oodMsCumP4"
-    }
     ```
 
   - **Réponse d'erreur**:

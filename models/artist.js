@@ -9,34 +9,30 @@ const Artist = db.define('Artist', {
     },
     name: {
         type: DataTypes.STRING,
-        defaultValue: '',
         allowNull: false
     },
     streams: {
         type: DataTypes.INTEGER(11),
-        defaultValue: '',
         allowNull: false
     },
     daily: {
         type: DataTypes.INTEGER(11),
-        defaultValue: '',
         allowNull: false
     },
     as_lead: {
         type: DataTypes.INTEGER(11),
-        defaultValue: '',
         allowNull: false
     },
     solo: {
         type: DataTypes.INTEGER(11),
-        defaultValue: '',
         allowNull: false
     },
     as_feature: {
         type: DataTypes.INTEGER(11),
-        defaultValue: '',
         allowNull: false
     }
 }, { paranoid: true })
+
+Artist.sync()
 
 module.exports = Artist
